@@ -1,4 +1,5 @@
 # Cryptocurrency Live Prices
+![](./assets/1544x500.png)
 Cryptocurrency live prices plugin for wordpress. The fastest coin price information anywhere on the web.
 
 ## Description
