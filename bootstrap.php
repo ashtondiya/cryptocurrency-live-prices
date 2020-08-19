@@ -52,9 +52,9 @@ function clp_requirements_error() {
   require_once( __DIR__ . '/views/requirements-error.php' );
 }
 
-function executium_view_helper($view = array(), $params, $path = null) {
+function clp_view_helper($view = array(), $params, $path = null) {
   $params = isset($params['data']) ? $params['data'] : array();
-  include_once( dirname( __DIR__ ) . "/executium_feed/views/{$view}.php" );
+  include_once( dirname( __DIR__ ) . "/cryptocurrency-live-prices/views/{$view}.php" );
 }
 
 /*
@@ -68,6 +68,8 @@ function executium_view_helper($view = array(), $params, $path = null) {
 if ( clp_requirements_met() ) {
   include_once ('controllers/admin.php');
 
+	updateDatabase();
+
   add_action( 'wp_enqueue_scripts', 'clp_scripts_basic' );
   include_once ('controllers/front.php');
 
@@ -75,7 +77,39 @@ if ( clp_requirements_met() ) {
   add_action( 'admin_notices', 'clp_requirements_error' );
 }
 
-function executium_scripts_basic()
+
+function updateDatabase()
+{
+	global $wpdb;
+
+	$origin = $wpdb->prefix . 'clp_origin';
+	$symbols = $wpdb->prefix . 'clp_symbols';
+
+	$charset_collate = $wpdb->get_charset_collate();
+	$origin_table = "CREATE TABLE IF NOT EXISTS $origin (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+		origin_slug varchar(100) NOT NULL,
+		origin_name varchar(100) NOT NULL,
+		origin_active TINYINT(1) DEFAULT 1,
+		origin_default TINYINT(1) DEFAULT 0,
+        created_at datetime NOT NULL,
+        UNIQUE (id)
+        ) $charset_collate;";
+
+	include_once ABSPATH . 'wp-admin/includes/upgrade.php';
+	dbDelta($origin_table);
+
+	$symbols_table = "CREATE TABLE IF NOT EXISTS $symbols (
+		id mediumint(9) NOT NULL AUTO_INCREMENT,
+        origin_id int(11) NOT NULL,
+        symbol_slug varchar(100) NOT NULL,
+        UNIQUE (origin_id, symbol_slug)
+        ) $charset_collate;";
+
+	dbDelta($symbols_table);
+}
+
+function clp_scripts_basic()
 {
   // Register the script like this for a plugin:
   wp_register_script( 'custom-script', plugins_url( '/assets/js/bootstrap.js', __FILE__ ) , array( 'jquery' ));

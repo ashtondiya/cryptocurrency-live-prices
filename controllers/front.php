@@ -1,7 +1,7 @@
 <?php
 
-function clp_embed_panel() {
-  executium_view_helper("panel", []);
+function clp_embed_panel($name = '') {
+  clp_view_helper("panel", ['origin' => $name]);
 }
 
-add_shortcode('clp_panel', 'clp_embed_panel');
+add_shortcode('clp_origin', 'clp_embed_panel');

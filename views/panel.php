@@ -59,8 +59,8 @@
   <div class="container">
     <div class="col-md-12">
 
-      <div class="row">
-        <div class="col-sm-6 col-lg-4">
+      <div class="row" id="symbols-container">
+   <!--     <div class="col-sm-6 col-lg-4">
           <div class="card" style="">
             <div class="card-header bg-behance content-center">
               <div class="" style="margin-right: 5px; float: right;">
@@ -85,7 +85,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
