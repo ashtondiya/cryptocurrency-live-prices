@@ -71,51 +71,45 @@ jQuery(document).ready(function($){
             //
             var code = exchange + '-' + v.id;
 
-            let symbol = `<div class="col-lg-3 col-md-3 col-sm-12" style="margin-bottom: 10px;"><div class="row">
-              <div class="col-md-6">
-              <div class="" id="` + iconUrl + v.base.toLowerCase() + `">
-              <div class="content-center">
-              <div class="" style="margin-right: 5px; float: left;">
-              <img src="` + iconUrl + v.base.toLowerCase() + `.png" onerror="this.onerror=null;this.src='https://cdn.executium.com/media/brands/icons//none.png';" class="" style="max-height: 50px; margin:10px;"/>
-              </div>
-              <div class="" style="">
-              <div class="text-value-xl">`+v.quote+`</div>
-              <div class="text-muted small">`+v.base+`</div>
-              <div class="text-uppercase text-muted small">`+capitalize(exchange)+`</div>
-              </div>
-              </div>
-              </div>
-              </div>
-              <div class="">
-              <div class="">
-              <div class="text-value-xl">BID <span class="text-uppercase text-muted small bids-` + code + `-price"></span></div>
-          </div>
-          <div class="vr">
-              </div>
-              <div class="">
-              <div class="text-value">459 <span class="text-uppercase text-muted small asks-` + code + `-price"></span></div>
-          </div>
-          <div class="">
-              <div class="text-value-xl">Diff <span class="text-uppercase text-muted small diff-` + code + `">0.0</span></div>
-          </div>
-              </div>
-          </div></div>`;
+            let symbol = `<div class="col-lg-4 col-md-4 col-sm-12" style="margin-bottom: 10px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="" id="` + iconUrl + v.base.toLowerCase() + `"></div>
+                                    <div class="">
+                                        <div class="" style="margin-right: 5px; float: left;">
+                                            <img src="` + iconUrl + v.base.toLowerCase() + `.png" onerror="this.onerror=null;this.src='https://cdn.executium.com/media/brands/icons//none.png';" class="" style="max-height: 50px; margin:10px;"/>
+                                        </div>
+                                        <div class="col-4 pull-left" style="">
+                                          <div class="text-value-xl">`+v.quote+`</div>
+                                          <div class="text-muted small">`+v.base+`</div>
+                                          <div class="text-uppercase text-muted small">`+capitalize(exchange)+`</div>
+                                        </div>
+                                        
+                                       <div class="">
+                                                                                 <div class="">BID <span style="font-size: 12px;" class="text-uppercase text-muted small bids-` + code + `-price"></span></div>
+                                    <div class="text-value">Asks <span style="font-size: 12px;" class="text-uppercase text-muted small asks-` + code + `-price"></span></div>
+                                          <div class="">Diff <span style="font-size: 12px;" class="text-uppercase text-muted small diff-` + code + `">0.0</span></div>
 
-
-
-
-            /*h+=`
-                <tr  class="row-bids-`+code+`-1 row-asks-`+code+`-1">
-                    <td style="white-space:nowrap">
-
-                        <img src="` + iconUrl + v.base.toLowerCase() + `.png" class="imgcheck" style="width:30px;height:30px;" /> ` + v.symbol + `<p class="text-icon">`+v.base+`</p>
-                    </td>
-                    <td  class="mobileonly">`+capitalize(exchange)+`</td>
-                    <td  class="mobileonly">`+v.quote+`</td>
-                    <td class="bids-` + code + `-price">&hellip;</td>
-                    <td class="asks-` + code + `-price">&hellip;</td>
-                    <td  class="mobileonly diff-` + code + `">&hellip;</td>
-                </tr>`;*/
+</div>
+                                    </div>
+                                </div>
+                                <!--<div class="">
+                                <div class="">
+                                    <div class="text-value-xl">BID <span class="text-uppercase text-muted small bids-` + code + `-price"></span></div>
+                                </div>
+                                <div class="vr">
+                                </div>
+                                <div class="">
+                                    <div class="text-value">459 <span class="text-uppercase text-muted small asks-` + code + `-price"></span></div>
+                                </div>
+                                <div class="">
+                                    <div class="text-value-xl"></div>
+                                </div>
+                            </div>
+                            </div>
+                            -->
+                        </div>
+                    </div>`;
 
             symDiff['bids/'+exchange+'/'+v.id+'-1']=0;
             symDiff['asks/'+exchange+'/'+v.id+'-1']=0;
