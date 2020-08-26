@@ -1,5 +1,6 @@
 <script>
   var path_images = "<?php echo plugin_dir_url( __DIR__ )."images" ?>";
+  var origin = "<?php isset($params['origin']['name']) ? $params['origin']['name'] : '' ?>";
 </script>
 
 <style>
@@ -55,6 +56,7 @@
 
 </style>
 
+<?php if($params['nav']): ?>
 <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
   <div class="container">
     <div class="col-md-12">
@@ -96,74 +98,8 @@
     </div>
   </div>
 </nav>
+<?php endif; ?>
 
-<div class="container-fluid"><div class="row" id="symbols-container">
-        <!--     <div class="col-sm-6 col-lg-4">
-			   <div class="card" style="">
-				 <div class="card-header bg-behance content-center">
-				   <div class="" style="margin-right: 5px; float: right;">
-					 <img src="https://cdn.executium.com/media/brands/icons/btc.png" class="" style="max-height: 50px; margin:10px;"/>
-				   </div>
-				   <div class="">
-					 <div class="text-value-xl">BTC/USD</div>
-					 <div class="text-muted small">BTC</div>
-					 <div class="text-uppercase text-muted small">Bitfinex</div>
-				   </div>
-				 </div>
-				 <div class="card-body row text-center">
-				   <div class="col-12">
-					 <div class="text-value-xl">BID <span class="text-uppercase text-muted small">11,898</span></div>
-				   </div>
-				   <div class="vr"></div>
-				   <div class="col-12">
-					 <div class="text-value">459 <span class="text-uppercase text-muted small">feeds</span></div>
-				   </div>
-				   <div class="col-12">
-					 <div class="text-value-xl">Diff <span class="text-uppercase text-muted small">0.03600000</span></div>
-				   </div>
-				 </div>
-			   </div>
-			 </div> -->
-    </div></div>
-<!--<div class="" >
-  <div class="container">
-    <div class="row">
-      <div class="col-md-2">
-        <div class="prehd1">Exchange:</div>
-        <div class="prehd2 exchange-name">&hellip;</div>
-      </div>
-      <div class="col-md-2">
-        <div class="prehd1">Symbols Showing:</div>
-        <div class="prehd2 symbols-showing">&hellip;</div>
-      </div>
-      <div class="col-md-2">
-        <div class="prehd1">Symbols Supported:</div>
-        <div class="prehd2 symbols-supported">&hellip;</div>
-      </div>
-      <div class="col-md-2">
-        <div class="prehd1">Last Updated:</div>
-        <div class="prehd2"><span class="last-update ago">&hellip;</span>ms</div>
-      </div>
-    </div>
-  </div>
-  <div class="table-content mt-2" style="max-width:auto;margin:0 auto">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-body">
-
-            <div class="table-responsive">
-              <div id="table">
-
-                <div class="spinner-grow text-primary" role="status">
-                  <span class="sr-only">Loading...</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="container-fluid">
+    <div class="row" id="symbols-container" data-origin="<?= $params['origin']['name'] ?>"></div>
 </div>
--->

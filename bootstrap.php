@@ -52,8 +52,7 @@ function clp_requirements_error() {
   require_once( __DIR__ . '/views/requirements-error.php' );
 }
 
-function clp_view_helper($view = array(), $params, $path = null) {
-  $params = isset($params['data']) ? $params['data'] : array();
+function clp_view_helper($view, $params = array(), $path = null) {
   include_once( dirname( __DIR__ ) . "/cryptocurrency-live-prices/views/{$view}.php" );
 }
 

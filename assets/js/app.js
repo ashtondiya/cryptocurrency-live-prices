@@ -9,8 +9,9 @@ jQuery(document).ready(function($){
 // Content Delivery Network Option
   var iconUrl='https://cdn.executium.com/media/brands/icons/';
   console.log(path_images);
-  function tableSymbols(exchange) {
 
+
+  function tableSymbols(exchange) {
     $('.exchange-name').empty().html('<img src="'+path_images+'/circle/'+exchange.toLowerCase()+'.png" class="imgcheck" style="width:30px;height:30px;" /> '+capitalize(exchange));
     $('.symbols-supported,.symbols-showing').empty().html('&hellip;');
 
@@ -41,100 +42,155 @@ jQuery(document).ready(function($){
         setTimeout(function() { tableSymbols(exchange); },1500);
 
       },
-      scriptCharset: "script", dataType: "json", success: function (data) {
-
-        var h = '';
+      scriptCharset: "script", dataType: "json",
+      success: function (data) {
         $('.symbols-supported').empty().html(data.data.length);
 
-
-        h += `<table class="table table-borderless">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width:20%;">Symbol</th>
-                        <th scope="col" class="mobileonly" style="width:10%;">Exchange</th>
-                        <th scope="col" class="mobileonly" style="width:15%;">Base</th>
-                        <th scope="col" style="width:15%;">Bid</th>
-                        <th scope="col" style="width:15%;">Ask</th>
-                        <th scope="col" class="mobileonly" style="width:15%;">Diff.</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-
         var showing=0;
-        //
-
         var symbol_container = $("#symbols-container");
+
         $.each(data.data, function (i, v) {
           // We do not want to show everything
-          if(rnd(1,20)==1 || i<5 || data.data.length<40)
-          {
+          if(rnd(1,20)==1 || i<5 || data.data.length<40) {
             //
             var code = exchange + '-' + v.id;
 
-            let symbol = `<div class="col-lg-4 col-md-4 col-sm-12" style="margin-bottom: 10px;">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="" id="` + iconUrl + v.base.toLowerCase() + `"></div>
-                                    <div class="">
-                                        <div class="" style="margin-right: 5px; float: left;">
-                                            <img src="` + iconUrl + v.base.toLowerCase() + `.png" onerror="this.onerror=null;this.src='https://cdn.executium.com/media/brands/icons//none.png';" class="" style="max-height: 50px; margin:10px;"/>
+            if( v.base != undefined) {
+              let symbol = `<div class="col-lg-4 col-md-4 col-sm-12" style="margin-bottom: 10px;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="" id="` + iconUrl + v.base.toLowerCase() + `"></div>
+                                        <div class="">
+                                            <div class="" style="margin-right: 5px; float: left;">
+                                                <img src="` + iconUrl + v.base.toLowerCase() + `.png" onerror="this.onerror=null;this.src='https://cdn.executium.com/media/brands/icons/none.png';" class="" style="max-height: 50px; margin:10px;"/>
+                                            </div>
+                                            <div class="col-4 pull-left" style="">
+                                                <div class="text-value-xl">` + v.quote + `</div>
+                                                <div class="text-muted small">` + v.base + `</div>
+                                                <div class="text-uppercase text-muted small">` + capitalize(exchange) + `</div>
+                                            </div>
+                                            
+                                           <div class="">
+                                                <div class="">BID <span style="font-size: 12px;" class="text-uppercase text-muted small bids-` + code + `-price"></span></div>
+                                                <div class="text-value">Asks <span style="font-size: 12px;" class="text-uppercase text-muted small asks-` + code + `-price"></span></div>
+                                                <div class="">Diff <span style="font-size: 12px;" class="text-uppercase text-muted small diff-` + code + `">0.0</span></div>
+                                           </div>
                                         </div>
-                                        <div class="col-4 pull-left" style="">
-                                          <div class="text-value-xl">`+v.quote+`</div>
-                                          <div class="text-muted small">`+v.base+`</div>
-                                          <div class="text-uppercase text-muted small">`+capitalize(exchange)+`</div>
-                                        </div>
-                                        
-                                       <div class="">
-                                                                                 <div class="">BID <span style="font-size: 12px;" class="text-uppercase text-muted small bids-` + code + `-price"></span></div>
-                                    <div class="text-value">Asks <span style="font-size: 12px;" class="text-uppercase text-muted small asks-` + code + `-price"></span></div>
-                                          <div class="">Diff <span style="font-size: 12px;" class="text-uppercase text-muted small diff-` + code + `">0.0</span></div>
-
-</div>
                                     </div>
                                 </div>
-                                <!--<div class="">
-                                <div class="">
-                                    <div class="text-value-xl">BID <span class="text-uppercase text-muted small bids-` + code + `-price"></span></div>
-                                </div>
-                                <div class="vr">
-                                </div>
-                                <div class="">
-                                    <div class="text-value">459 <span class="text-uppercase text-muted small asks-` + code + `-price"></span></div>
-                                </div>
-                                <div class="">
-                                    <div class="text-value-xl"></div>
-                                </div>
-                            </div>
-                            </div>
-                            -->
-                        </div>
-                    </div>`;
+                            </div>`;
 
-            symDiff['bids/'+exchange+'/'+v.id+'-1']=0;
-            symDiff['asks/'+exchange+'/'+v.id+'-1']=0;
+              symDiff['bids/' + exchange + '/' + v.id + '-1'] = 0;
+              symDiff['asks/' + exchange + '/' + v.id + '-1'] = 0;
 
-            // Always plural. Always asks, or bids, never ask or bid
-            request_orderbook_server(exchange, v.id, 'bids');
-            request_orderbook_server(exchange, v.id, 'asks');
-            //
-            showing++;
+              // Always plural. Always asks, or bids, never ask or bid
+              request_orderbook_server(exchange, v.id, 'bids');
+              request_orderbook_server(exchange, v.id, 'asks');
+              //
+              showing++;
 
-            symbol_container.append(symbol);
+              symbol_container.append(symbol);
+            }
+
           }
         });
 
-        h += '</tbody>';
-        h += '</table>';
-
         $('.symbols-showing').empty().html(showing);
-
-        table.empty().html(h);
 
         // Image Check
         imageCheck('.imgcheck');
+      }
+
+    });
+
+    return true;
+  }
 
 
+  function customSymbol(exchange, symbols) {
+    //$('.exchange-name').empty().html('<img src="'+path_images+'/circle/'+exchange.toLowerCase()+'.png" class="imgcheck" style="width:30px;height:30px;" /> '+capitalize(exchange));
+    //$('.symbols-supported,.symbols-showing').empty().html('&hellip;');
+
+    //var table = $('#table');
+    //table.empty().html('<div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading &hellip;</span></div>');
+
+    console.log("."+exchange+"-"+symbols);
+
+    var url = 'https://marketdata.executium.com/api/v2/system/symbols';
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: 'exchange=' + exchange,
+      cache: false,
+      crossDomain: true,
+      xhrFields: {withCredentials: true},
+      timeout: 6000,
+      error: function (data) {
+        setTimeout(function() { customSymbol(exchange, symbols) },1500);
+
+      },
+      scriptCharset: "script", dataType: "json",
+      success: function (data) {
+        $('.symbols-supported').empty().html(data.data.length);
+
+        var showing=0;
+        var container = $("."+exchange+"-"+symbols);
+        console.log("."+exchange+"-"+symbols);
+var add = false;
+        $.each(data.data, function (i, v) {
+          // We do not want to show everything
+          if(rnd(1,20)==1 || i<5 || data.data.length<40) {
+            //
+            var code = exchange + '-' + v.id;
+
+            if( v.base != undefined && symbols == v.base.toLowerCase()) {
+              add = true;
+              let symbol = `<div class="col-lg-4 col-md-4 col-sm-12" style="margin-bottom: 10px;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="" id="` + iconUrl + v.base.toLowerCase() + `"></div>
+                                        <div class="">
+                                            <div class="" style="margin-right: 5px; float: left;">
+                                                <img src="` + iconUrl + v.base.toLowerCase() + `.png" onerror="this.onerror=null;this.src='https://cdn.executium.com/media/brands/icons/none.png';" class="" style="max-height: 50px; margin:10px;"/>
+                                            </div>
+                                            <div class="col-4 pull-left" style="">
+                                                <div class="text-value-xl">` + v.quote + `</div>
+                                                <div class="text-muted small">` + v.base + `</div>
+                                                <div class="text-uppercase text-muted small">` + capitalize(exchange) + `</div>
+                                            </div>
+                                            
+                                           <div class="">
+                                                <div class="">BID <span style="font-size: 12px;" class="text-uppercase text-muted small bids-` + code + `-price"></span></div>
+                                                <div class="text-value">Asks <span style="font-size: 12px;" class="text-uppercase text-muted small asks-` + code + `-price"></span></div>
+                                                <div class="">Diff <span style="font-size: 12px;" class="text-uppercase text-muted small diff-` + code + `">0.0</span></div>
+                                           </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+
+              symDiff['bids/' + exchange + '/' + v.id + '-1'] = 0;
+              symDiff['asks/' + exchange + '/' + v.id + '-1'] = 0;
+
+              // Always plural. Always asks, or bids, never ask or bid
+              request_orderbook_server(exchange, v.id, 'bids');
+              request_orderbook_server(exchange, v.id, 'asks');
+              //
+              showing++;
+
+              container.append(symbol);
+            }
+
+            if(add) {
+              return false;
+            }
+          }
+        });
+
+        $('.symbols-showing').empty().html(showing);
+
+        // Image Check
+        imageCheck('.imgcheck');
       }
 
     });
@@ -399,7 +455,19 @@ jQuery(document).ready(function($){
     }
   }
 
+  //
+
+  var customized_query = [];
+
+  if($("#symbols-container").length > 0 && $("#symbols-container").data('origin') != undefined) {
+    exchange = $("#symbols-container").data('origin');
+  }
+
   tableSymbols(exchange);
+
+  if($(".symbol") != undefined) {
+    customSymbol($(".symbol").data('origin'), $(".symbol").data('symbol'));
+  }
 
   setInterval(function() {
     $.each($('.ago'),function() {
