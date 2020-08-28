@@ -6,17 +6,11 @@ function clp_embed_panel($name = 'bitfinex', $nav = true) {
 
 add_shortcode('clp_panel', 'clp_embed_panel');
 
-
-function clp_embed_symbol($origin = '', $symbol = '') {
-	if(empty($origin)) {
-		echo "need to be selected one origin";
-	}
-
-	clp_view_helper("symbol", ['origin' => $origin, 'symbol' => $symbol]);
-
-	//add_shortcode( $tag, 'wptuts_columns_sc' );
+function clp_embed_symbol($atts = []) {
+	$result ="<div id='{$atts['origin']}-{$atts['symbol']}' class='row symbol {$atts['origin']}-{$atts['symbol']}' data-origin='{$atts['origin']}' data-symbol='{$atts['symbol']}'></div>";
+	echo $result;
 }
 
-
-
 add_shortcode('clp_symbol', 'clp_embed_symbol');
+
+

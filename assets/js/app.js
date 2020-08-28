@@ -8,15 +8,13 @@ jQuery(document).ready(function($){
   var symDiff = [];
 // Content Delivery Network Option
   var iconUrl='https://cdn.executium.com/media/brands/icons/';
-  console.log(path_images);
-
 
   function tableSymbols(exchange) {
-    $('.exchange-name').empty().html('<img src="'+path_images+'/circle/'+exchange.toLowerCase()+'.png" class="imgcheck" style="width:30px;height:30px;" /> '+capitalize(exchange));
+    $('.exchange-name').empty().html('<img src="../images/circle/'+exchange.toLowerCase()+'.png" class="imgcheck" style="width:30px;height:30px;" /> '+capitalize(exchange));
     $('.symbols-supported,.symbols-showing').empty().html('&hellip;');
 
-    var table = $('#table');
-    table.empty().html('<div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading &hellip;</span></div>');
+    //var table = $('#table');
+    //table.empty().html('<div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading &hellip;</span></div>');
 
     var url = 'https://marketdata.executium.com/api/v2/system/symbols';
     $.ajax({
@@ -114,7 +112,7 @@ jQuery(document).ready(function($){
     //var table = $('#table');
     //table.empty().html('<div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading &hellip;</span></div>');
 
-    console.log("."+exchange+"-"+symbols);
+    //console.log("."+exchange+"-"+symbols);
 
     var url = 'https://marketdata.executium.com/api/v2/system/symbols';
     $.ajax({
@@ -136,7 +134,7 @@ jQuery(document).ready(function($){
         var showing=0;
         var container = $("."+exchange+"-"+symbols);
         console.log("."+exchange+"-"+symbols);
-var add = false;
+        var add = false;
         $.each(data.data, function (i, v) {
           // We do not want to show everything
           if(rnd(1,20)==1 || i<5 || data.data.length<40) {
@@ -465,9 +463,9 @@ var add = false;
 
   tableSymbols(exchange);
 
-  if($(".symbol") != undefined) {
-    customSymbol($(".symbol").data('origin'), $(".symbol").data('symbol'));
-  }
+  $.each($(".symbol"),function(i, v) {
+    customSymbol($(this).data('origin'), $(this).data('symbol'));
+  });
 
   setInterval(function() {
     $.each($('.ago'),function() {
