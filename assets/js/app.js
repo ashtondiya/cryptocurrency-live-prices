@@ -106,15 +106,8 @@ jQuery(document).ready(function($){
 
 
   function customSymbol(exchange, symbols) {
-    //$('.exchange-name').empty().html('<img src="'+path_images+'/circle/'+exchange.toLowerCase()+'.png" class="imgcheck" style="width:30px;height:30px;" /> '+capitalize(exchange));
-    //$('.symbols-supported,.symbols-showing').empty().html('&hellip;');
+    let url = 'https://marketdata.executium.com/api/v2/system/symbols';
 
-    //var table = $('#table');
-    //table.empty().html('<div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading &hellip;</span></div>');
-
-    //console.log("."+exchange+"-"+symbols);
-
-    var url = 'https://marketdata.executium.com/api/v2/system/symbols';
     $.ajax({
       type: "POST",
       url: url,
@@ -125,46 +118,40 @@ jQuery(document).ready(function($){
       timeout: 6000,
       error: function (data) {
         setTimeout(function() { customSymbol(exchange, symbols) },1500);
-
       },
       scriptCharset: "script", dataType: "json",
       success: function (data) {
         $('.symbols-supported').empty().html(data.data.length);
 
-        var showing=0;
-        var container = $("."+exchange+"-"+symbols);
-        console.log("."+exchange+"-"+symbols);
-        var add = false;
+        let showing = 0;
+        let container = $("."+exchange+"-"+symbols);
+
+        let add = false;
+
         $.each(data.data, function (i, v) {
-          // We do not want to show everything
-          if(rnd(1,20)==1 || i<5 || data.data.length<40) {
+          //if(rnd(1,20)==1 || i<5 || data.data.length < 40) {
             //
             var code = exchange + '-' + v.id;
 
             if( v.base != undefined && symbols == v.base.toLowerCase()) {
               add = true;
-              let symbol = `<div class="col-lg-4 col-md-4 col-sm-12" style="margin-bottom: 10px;">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="" id="` + iconUrl + v.base.toLowerCase() + `"></div>
-                                        <div class="">
-                                            <div class="" style="margin-right: 5px; float: left;">
-                                                <img src="` + iconUrl + v.base.toLowerCase() + `.png" onerror="this.onerror=null;this.src='https://cdn.executium.com/media/brands/icons/none.png';" class="" style="max-height: 50px; margin:10px;"/>
-                                            </div>
-                                            <div class="col-4 pull-left" style="">
-                                                <div class="text-value-xl">` + v.quote + `</div>
-                                                <div class="text-muted small">` + v.base + `</div>
-                                                <div class="text-uppercase text-muted small">` + capitalize(exchange) + `</div>
-                                            </div>
-                                            
-                                           <div class="">
-                                                <div class="">BID <span style="font-size: 12px;" class="text-uppercase text-muted small bids-` + code + `-price"></span></div>
-                                                <div class="text-value">Asks <span style="font-size: 12px;" class="text-uppercase text-muted small asks-` + code + `-price"></span></div>
-                                                <div class="">Diff <span style="font-size: 12px;" class="text-uppercase text-muted small diff-` + code + `">0.0</span></div>
-                                           </div>
-                                        </div>
+              let symbol = `<div class="" style="">
+                                <div class="">
+                                    <div class="" style="margin-right: 5px; float: left;">
+                                        <img src="` + iconUrl + v.base.toLowerCase() + `.png" onerror="this.onerror=null;this.src='https://cdn.executium.com/media/brands/icons/none.png';" class="" style="max-height: 50px; margin:10px;"/>
                                     </div>
+                                    <div class="" style="">
+                                        <div class="">` + v.quote + `</div>
+                                        <div class="">` + v.base + `</div>
+                                        <div class="">` + capitalize(exchange) + `</div>
+                                    </div>
+                                   <div class="">
+                                        <div class="">BID <span style="font-size: 12px;" class="bids-` + code + `-price"></span></div>
+                                        <div class="text-value">Asks <span style="font-size: 12px;" class="asks-` + code + `-price"></span></div>
+                                        <div class="">Diff <span style="font-size: 12px;" class="diff-` + code + `">0.0</span></div>
+                                   </div>
                                 </div>
+                            </div>
                             </div>`;
 
               symDiff['bids/' + exchange + '/' + v.id + '-1'] = 0;
@@ -182,7 +169,7 @@ jQuery(document).ready(function($){
             if(add) {
               return false;
             }
-          }
+          //}
         });
 
         $('.symbols-showing').empty().html(showing);
@@ -308,6 +295,7 @@ jQuery(document).ready(function($){
         let split = n.split('-');
         let side = split[0];
 
+        console.log(n);
         let price = parseFloat(j[0]).toFixed(8);
 
         if(price > 1) {
@@ -329,7 +317,7 @@ jQuery(document).ready(function($){
         $('.last-update').empty().html( ago );
         $('.server-'+n).empty().html( id );
 
-
+        console.log('aaaa');
         // Only for bids in this example
         if(side=='bids') {
           if(typeof monitor[n] === 'undefined') {
@@ -437,7 +425,6 @@ jQuery(document).ready(function($){
   {
     sockets[id].send({'subscribe':tag});
   }
-
 
   socket_connect(wssBASE,'https:\/\/'+wssBASE+':2083','obreq');
 
