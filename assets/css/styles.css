@@ -1,0 +1,17 @@
+.symbol {
+    display: flex;
+}
+
+
+@media (min-width: 300px) {
+    .symbol {
+        width: 33%;
+    }
+}
+
+
+@media (min-width: 620px) {
+    .symbol {
+        width: 33%;
+    }
+}
