@@ -15,3 +15,18 @@
         width: 33%;
     }
 }
+
+.items-no-decoration {
+    margin-bottom: 40px;
+}
+
+.items-no-decoration img{
+    align-content: baseline;
+    display: inline-flex;
+}
+
+
+.items-no-decoration a {
+    margin-right: 10px;
+    margin-left: 10px;
+}

@@ -10,8 +10,8 @@ jQuery(document).ready(function($){
   var iconUrl='https://cdn.executium.com/media/brands/icons/';
 
   function tableSymbols(exchange) {
-    $('.exchange-name').empty().html('<img src="../images/circle/'+exchange.toLowerCase()+'.png" class="imgcheck" style="width:30px;height:30px;" /> '+capitalize(exchange));
-    $('.symbols-supported,.symbols-showing').empty().html('&hellip;');
+    //$('.exchange-name').empty().html('<img src="../images/circle/'+exchange.toLowerCase()+'.png" class="imgcheck" style="width:30px;height:30px;" /> '+capitalize(exchange));
+    //$('.symbols-supported,.symbols-showing').empty().html('&hellip;');
 
     //var table = $('#table');
     //table.empty().html('<div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading &hellip;</span></div>');
@@ -54,7 +54,6 @@ jQuery(document).ready(function($){
             var code = exchange + '-' + v.id;
 
             if( v.base != undefined) {
-
 
               let symbol = `<div class="" style="width: 45%;display: flex;float: left;margin:1%;">
                                
