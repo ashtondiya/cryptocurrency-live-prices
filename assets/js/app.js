@@ -54,30 +54,7 @@ jQuery(document).ready(function($){
             var code = exchange + '-' + v.id;
 
             if( v.base != undefined) {
-              /*let symbol = `<div class="col-lg-4 col-md-4 col-sm-12" style="margin-bottom: 10px;">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="" id="` + iconUrl + v.base.toLowerCase() + `"></div>
-                                        <div class="">
-                                            <div class="" style="margin-right: 5px; float: left;">
-                                                <img src="` + iconUrl + v.base.toLowerCase() + `.png" onerror="this.onerror=null;this.src='https://cdn.executium.com/media/brands/icons/none.png';" class="" style="max-height: 50px; margin:10px;"/>
-                                            </div>
-                                            <div class="col-4 pull-left" style="">
-                                                <div class="text-value-xl">` + v.quote + `</div>
-                                                <div class="text-muted small">` + v.base + `</div>
-                                                <div class="text-uppercase text-muted small">` + capitalize(exchange) + `</div>
-                                            </div>
-                                            
-                                           <div class="">
-                                                <div class="">BID <span style="font-size: 12px;" class="text-uppercase text-muted small bids-` + code + `-price"></span></div>
-                                                <div class="text-value">Asks <span style="font-size: 12px;" class="text-uppercase text-muted small asks-` + code + `-price"></span></div>
-                                                <div class="">Diff <span style="font-size: 12px;" class="text-uppercase text-muted small diff-` + code + `">0.0</span></div>
-                                           </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`;
-              */
+
 
               let symbol = `<div class="" style="width: 45%;display: flex;float: left;margin:1%;">
                                
