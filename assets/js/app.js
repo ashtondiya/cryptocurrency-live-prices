@@ -1,21 +1,14 @@
 jQuery.noConflict();
 
 var symDiff = [];
-// Content Delivery Network Option
 var iconUrl='https://cdn.executium.com/media/brands/icons/';
 
 jQuery(document).ready(function($){
   var symDiff = [];
-// Content Delivery Network Option
+
   var iconUrl='https://cdn.executium.com/media/brands/icons/';
 
   function tableSymbols(exchange) {
-    //$('.exchange-name').empty().html('<img src="../images/circle/'+exchange.toLowerCase()+'.png" class="imgcheck" style="width:30px;height:30px;" /> '+capitalize(exchange));
-    //$('.symbols-supported,.symbols-showing').empty().html('&hellip;');
-
-    //var table = $('#table');
-    //table.empty().html('<div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading &hellip;</span></div>');
-
     var url = 'https://marketdata.executium.com/api/v2/system/symbols';
     $.ajax({
       type: "POST",
@@ -29,6 +22,7 @@ jQuery(document).ready(function($){
         if (typeof data.responseJSON.data.error !== 'undefined') {
           //table.empty().html(data.responseJSON.data.error);
         } else {
+          $("#error_symbols").fadeIn("<p>Failed to load; Please view console.</p>");
           //table.empty().html('Failed to load; Please view console.');
         }
 
@@ -38,7 +32,6 @@ jQuery(document).ready(function($){
         */
 
         setTimeout(function() { tableSymbols(exchange); },1500);
-
       },
       scriptCharset: "script", dataType: "json",
       success: function (data) {
@@ -56,10 +49,8 @@ jQuery(document).ready(function($){
             if( v.base != undefined) {
 
               let symbol = `<div class="" style="width: 45%;display: flex;float: left;margin:1%;">
-                               
                                 <img src="` + iconUrl + v.base.toLowerCase() + `.png" onerror="this.onerror=null;this.src='https://cdn.executium.com/media/brands/icons/none.png';" class="" 
                                 style="max-height: 50px; margin:10px;"/>
-                            
                             <div class="" style="width: 30%;float: left">
                                 <div class="">` + v.quote + `</div>
                                 <div class="">` + v.base + `</div>
@@ -72,7 +63,6 @@ jQuery(document).ready(function($){
                            </div>
                         </div></div>`;
 
-
               symDiff['bids/' + exchange + '/' + v.id + '-1'] = 0;
               symDiff['asks/' + exchange + '/' + v.id + '-1'] = 0;
 
@@ -84,7 +74,6 @@ jQuery(document).ready(function($){
 
               symbol_container.append(symbol);
             }
-
           }
         });
 
@@ -286,7 +275,6 @@ jQuery(document).ready(function($){
         let split = n.split('-');
         let side = split[0];
 
-        console.log(n);
         let price = parseFloat(j[0]).toFixed(8);
 
         if(price > 1) {
@@ -308,7 +296,6 @@ jQuery(document).ready(function($){
         $('.last-update').empty().html( ago );
         $('.server-'+n).empty().html( id );
 
-        console.log('aaaa');
         // Only for bids in this example
         if(side=='bids') {
           if(typeof monitor[n] === 'undefined') {
@@ -421,11 +408,13 @@ jQuery(document).ready(function($){
 
   var exchange='bitfinex';
 
+  console.log(window.location.href.indexOf("exchange="));
   if (window.location.href.indexOf("exchange=") > -1) {
     var queryString = window.location.search;
     var urlParams = new URLSearchParams(queryString);
     //
     exchange = urlParams.get('exchange');
+    console.log(exchange);
     if (exchange == '') {
       exchange = 'bitfinex';
     }
@@ -436,7 +425,11 @@ jQuery(document).ready(function($){
   var customized_query = [];
 
   if($("#symbols-container").length > 0 && $("#symbols-container").data('origin') != undefined) {
-    exchange = $("#symbols-container").data('origin');
+    if($("#symbols-container").data('origin') !== "") {
+      console.log($("#symbols-container").data('origin'));
+      exchange = $("#symbols-container").data('origin');
+    }
+
   }
 
   tableSymbols(exchange);

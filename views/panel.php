@@ -15,5 +15,6 @@
 </div>
 
 <div class="">
+    <div id="error_symbols" style="display: none;"></div>
     <div class="" id="symbols-container" data-origin="<?= $params['origin'] ?>"></div>
 </div>
